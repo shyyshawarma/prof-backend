@@ -1,9 +1,16 @@
 import mongoose from "mongoose";
 import {DB_NAME} from "./constants.js";
 import connectdb from "./db/index.js";
+import { app } from "./app.js";
 
 console.log(process.env.MONGODB_URI)
-connectdb()
+connectdb().then(()=>{
+    app.listen(process.env.PORT || 3501 ,()=>{
+        console.log("app listening on port", process.env.PORT)
+    })
+}).catch((e)=>{
+    console.log("connection failed with db",e)
+})
 
 
 
